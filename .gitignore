@@ -172,7 +172,7 @@ aws-credentials/
 helm/
 .secrets/
 .ci/
-.github/
+
 
 ### 🛠 PyCharm ###
 .idea/
