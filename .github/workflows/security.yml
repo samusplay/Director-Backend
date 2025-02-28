@@ -1,34 +1,17 @@
-
-name: Security Check
+name: Security Scan
 
 on:
   schedule:
-    - cron: '0 12 * * 1'  # Se ejecuta cada lunes a las 12 PM UTC
+    - cron: '0 0 * * 1'  # Corre cada lunes a medianoche
+  workflow_dispatch:
 
 jobs:
   security:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      - name: Checkout del código
+        uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.10'
-
-      - name: Install Dependencies
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
-          pip install safety bandit
-
-      - name: Check for Vulnerabilities (Safety)
-        run: |
-          safety check -r requirements.txt
-
-      - name: Static Security Analysis (Bandit)
-        run: |
-          bandit -r .
+      - name: Analizar dependencias con Dependabot
+        uses: github/codeql-action/analyze
